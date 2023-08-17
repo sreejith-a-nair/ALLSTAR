@@ -1,0 +1,88 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/base::Layout(~{::section})}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+
+<body>
+ <section>
+  <style>
+        body {
+            padding-top: 20px;
+            color: white;
+        }
+        .container {
+         max-width: 1400px;
+
+        }
+        .mt-5 {
+            margin-top: 100px;
+        }
+    </style>
+
+<!--   <input class="form-control me-2 container" type="text" name="keyword" th:value="${keyword}"-->
+<!--          placeholder="Search " aria-label="Search">-->
+<!--   <button class="btn btn-primary" type="submit" style="border: 2px solid #ffffff;margin-right:30px;">Search</button>-->
+
+
+   <div class=" d-flex align-items-center" style="margin-left:300px;margin-top:10px;margin-right:20px;">
+     <form th:action="@{/admin/search}" class="d-flex ml-auto" method="get">
+       <input class="form-control me-2" type="text" name="keyword" th:value="${keyword}"
+              placeholder="Search" aria-label="Search" style="border: 1px solid #000000;">
+       <button type="submit" style="border: 2px solid #464242; border-radius: 10px;margin-left:5px; background-color: #3D7CCB; color: white;
+                   transition: background-color 0.3s, color 0.3s;"
+               onmouseover="this.style.backgroundColor = '#0056b3'"
+               onmouseout="this.style.backgroundColor = '#0D6EFD'" >Search</button>
+     </form>
+   </div>
+
+
+<div class="container pt-5" style="padding-left:23rem;">
+  <table class="table table-striped table-responsive" style="color:black;">
+    <thead>
+    <tr class="pb-5">
+      <th scope="col">Username</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="user : ${users}">
+      <td th:text="${user.username}"></td>
+      <td th:text="${user.firstname}"></td>
+      <td th:text="${user.lastname}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.contact}"></td>
+
+      <td>
+        <a th:if="${user.blocked}"
+           th:href="@{'/admin/unblock/'+${user.id}}"
+           class="btn btn-warning">UnBlock</a>
+        <a th:unless="${user.blocked}"
+           th:href="@{'/admin/block/'+${user.id}}"
+           class="btn btn-success"> Block </a>
+      </td>
+    </tr>
+
+    </tbody>
+
+  </table>
+</div>
+ </section>
+
+
+</body>
+</html>
